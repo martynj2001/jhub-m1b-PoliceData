@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { map, Subject, Subscription } from 'rxjs';
+import { PoliceApiCall } from '../shared/police-api-call.service';
 import { Force } from './force.model';
 
 
@@ -9,9 +10,9 @@ import { Force } from './force.model';
 export class PoliceForcesService {
 
   policeForcesUpdated = new Subject<Force[]>();
-  private forces: Force[];
+  private forces: Force[] = [];
 
-  constructor() {}
+  constructor(private polApiCall: PoliceApiCall) {}
 
   setForces(forces: Force[]){
     this.forces = forces;
@@ -33,6 +34,28 @@ export class PoliceForcesService {
     console.log(this.forces[index]);
     return this.forces[index];
   }
-  
+
+  extractForces(response: any){
+
+    //const forces: Force[] = [];
+
+    for (let force of response){
+      this.forces.push(new Force(force.id, force.name, '','',[],''));
+    }
+  }
+
+  fetchForces(){
+    this.polApiCall.fetchAPI('forces')
+      .pipe(map(
+        (response => {
+          this.extractForces(response)
+        })
+      ))
+      .subscribe(
+        (response) => {
+          //console.log(this.forces)
+          this.policeForcesUpdated.next(this.forces.slice());
+        });
+  }
 }
 

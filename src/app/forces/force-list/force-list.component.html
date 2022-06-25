@@ -1,1 +1,10 @@
-<p>force-list works!</p>
+<div class="row">
+    <h5 class="text-center">UK Police Forces</h5>
+    <hr>
+</div>
+<div class="row">
+  <app-force-list-item
+    *ngFor="let force of forces"
+    [force]="force.name"></app-force-list-item>
+</div>
+

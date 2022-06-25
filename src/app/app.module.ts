@@ -9,6 +9,8 @@ import { ForceListComponent } from './forces/force-list/force-list.component';
 import { ForceDetailComponent } from './forces/force-detail/force-detail.component';
 import { PoliceInfoComponent } from './police-info/police-info.component';
 import { ForceStartComponent } from './forces/force-detail/force-start/force-start.component';
+import { ForceListItemComponent } from './forces/force-list/force-list-item/force-list-item.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,11 +20,13 @@ import { ForceStartComponent } from './forces/force-detail/force-start/force-sta
     ForceListComponent,
     ForceDetailComponent,
     PoliceInfoComponent,
-    ForceStartComponent
+    ForceStartComponent,
+    ForceListItemComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
