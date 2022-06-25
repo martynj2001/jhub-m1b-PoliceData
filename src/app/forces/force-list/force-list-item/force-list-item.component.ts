@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ForceListItemComponent implements OnInit {
 
   @Input() force: string;
+  @Input() index:number;
 
   constructor() { }
 

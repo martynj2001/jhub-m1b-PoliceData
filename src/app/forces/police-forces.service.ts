@@ -4,9 +4,8 @@ import { PoliceApiCall } from '../shared/police-api-call.service';
 import { Force } from './force.model';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
+
 export class PoliceForcesService {
 
   policeForcesUpdated = new Subject<Force[]>();
@@ -16,46 +15,29 @@ export class PoliceForcesService {
 
   setForces(forces: Force[]){
     this.forces = forces;
+    //console.log(this.forces)
     this.policeForcesUpdated.next(this.forces.slice());
+  }
+
+  getForces(){
+    return this.forces.slice();
   }
   
   setforcesDetail(index: number){
 
   }
 
-  getForces(){
-    return this.forces.slice();
-  }
-
-
+  
   getForceDetail(index: number){
-    console.log(this.forces);
-    console.log(index);
-    console.log(this.forces[index]);
+    this.polApiCall.fetchForceDetail(this.forces[index].id)
+    .subscribe((force: Force) => {
+      this.forces[index].description = force.description;
+      this.forces[index].tel = force.tel;
+      this.forces[index].url = force.url;
+      this.forces[index].engagement = force.engagement;
+    });
     return this.forces[index];
-  }
-
-  extractForces(response: any){
-
-    //const forces: Force[] = [];
-
-    for (let force of response){
-      this.forces.push(new Force(force.id, force.name, '','',[],''));
-    }
-  }
-
-  fetchForces(){
-    this.polApiCall.fetchAPI('forces')
-      .pipe(map(
-        (response => {
-          this.extractForces(response)
-        })
-      ))
-      .subscribe(
-        (response) => {
-          //console.log(this.forces)
-          this.policeForcesUpdated.next(this.forces.slice());
-        });
+    
   }
 }
 

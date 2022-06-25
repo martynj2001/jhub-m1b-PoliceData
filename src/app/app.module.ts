@@ -11,6 +11,7 @@ import { PoliceInfoComponent } from './police-info/police-info.component';
 import { ForceStartComponent } from './forces/force-detail/force-start/force-start.component';
 import { ForceListItemComponent } from './forces/force-list/force-list-item/force-list-item.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PoliceForcesService } from './forces/police-forces.service';
 
 @NgModule({
   declarations: [

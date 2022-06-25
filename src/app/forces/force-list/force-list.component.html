@@ -4,7 +4,8 @@
 </div>
 <div class="row">
   <app-force-list-item
-    *ngFor="let force of forces"
-    [force]="force.name"></app-force-list-item>
+    *ngFor="let force of forces; let i = index"
+    [force]="force.name"
+    [index]="i"></app-force-list-item>
 </div>
 

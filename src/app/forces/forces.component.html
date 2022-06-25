@@ -7,13 +7,15 @@
                 <div class="card">
                     <div class="card-body">
                         <app-force-list></app-force-list>
+                        <!-- <p *ngIf="isLoading">Loading ....... </p> -->
                     </div>
                 </div>
             </div>
             <div class="col-md-7">
                 <div class="card">
                     <div class="card-body">
-                        <router-outlet></router-outlet>
+                        <router-outlet *ngIf="!isLoading"></router-outlet>
+                        <p *ngIf="isLoading">Loading ....... </p>
                     </div>
                 </div>
             </div>

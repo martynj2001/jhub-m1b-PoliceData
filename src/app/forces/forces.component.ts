@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { PoliceApiCall } from '../shared/police-api-call.service';
 import { Force } from './force.model';
 import { PoliceForcesService } from './police-forces.service';
+
 
 @Component({
   selector: 'app-forces',
@@ -11,24 +11,22 @@ import { PoliceForcesService } from './police-forces.service';
 })
 export class ForcesComponent implements OnInit, OnDestroy {
 
-  forces: Force[];
-  subscription: Subscription;
+  isLoading = null;
 
-  constructor(private policeForceService: PoliceForcesService) { }
+  constructor(private polApiService: PoliceApiCall, private polForService: PoliceForcesService) { }
 
   ngOnInit(): void {
-
-    this.policeForceService.fetchForces();
-    // this.subscription = this.policeForceService.policeForcesUpdated.subscribe(
-    //   (forces: Force[]) => {
-    //     this.forces = forces;
-    //   }
-    // )
-
+    this.isLoading = true;
+    this.polApiService.fetchAPI('forces').subscribe(
+      (forces) => {
+        this.isLoading = false;
+        this.polForService.setForces(forces);
+        //console.log("Subscription triggered");
+      });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+
   }
 
 }
