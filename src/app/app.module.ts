@@ -12,6 +12,7 @@ import { ForceStartComponent } from './forces/force-detail/force-start/force-sta
 import { ForceListItemComponent } from './forces/force-list/force-list-item/force-list-item.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PoliceForcesService } from './forces/police-forces.service';
+import { RemoveTagsPipe } from './shared/remove-tags.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PoliceForcesService } from './forces/police-forces.service';
     ForceDetailComponent,
     PoliceInfoComponent,
     ForceStartComponent,
-    ForceListItemComponent
+    ForceListItemComponent,
+    RemoveTagsPipe
   ],
   imports: [
     BrowserModule,

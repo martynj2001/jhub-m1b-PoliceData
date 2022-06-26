@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, ɵclearResolutionOfComponentResourcesQueue } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Force } from '../forces/force.model';
 import { PoliceForcesService } from '../forces/police-forces.service';
+import { Socials } from '../forces/socials.model';
 
 
 
@@ -38,7 +39,21 @@ export class PoliceApiCall {
 
   fetchForceDetail(id: string){
     const apiUrl = this.url + "forces" + "/" + id;
-    return this.http.get(apiUrl);
+    return this.http.get<Force>(apiUrl).pipe(
+      map(
+        (response) => {
+          let force: Force = new Force(
+            response.id,
+            response.name,
+            response.description,
+            response.url,
+            response.engagement_methods,
+            response.telephone
+          )
+          return force;
+        }
+      )
+    )
   }
 
 }

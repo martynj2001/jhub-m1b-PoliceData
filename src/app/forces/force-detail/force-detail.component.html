@@ -3,8 +3,12 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <p>{{force.description}}</p>
-    </div>
+        <h5 class="fw-bold">Force Description:</h5>
+        <p>{{force.description | removeTags}}</p>
+        <h5 class="fw-bold">Force Contact Details:</h5>
+        <p><span class="fw-bold">Web Page: </span><a [href]="force.url">{{force.url | removeTags}}</a>
+        <p><span class="fw-bold">Telephone: </span>{{force.telephone| removeTags}}</p>
+        </div>
 </div>
 <div class="row">
     <div class="col-md-2 text-center"></div>

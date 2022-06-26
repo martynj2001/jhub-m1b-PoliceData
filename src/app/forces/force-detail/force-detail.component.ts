@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Force } from '../force.model';
 import { PoliceForcesService } from '../police-forces.service';
+import { Socials } from '../socials.model';
 
 @Component({
   selector: 'app-force-detail',
@@ -13,6 +14,7 @@ export class ForceDetailComponent implements OnInit, OnDestroy {
 
   force: Force;
   index: number = 0;
+  social_media: Socials[]
 
   subscription: Subscription;
 
@@ -28,9 +30,21 @@ export class ForceDetailComponent implements OnInit, OnDestroy {
           this.index = +params['id'];
           console.log(this.index);
           this.force = this.polForService.getForceDetail(this.index);
-          console.log(this.force);
+          this.getSocials(this.force.engagement_methods);
         }
       );
+  }
+
+  getSocials(engagement_methods){
+    for (let engagement of engagement_methods){
+      this.social_media.push(new Socials(
+        engagement.url,
+        engagement.type,
+        engagement.description,
+        engagement.title
+      ))
+      console.log(engagement);
+    }
   }
 
   ngOnDestroy(): void {

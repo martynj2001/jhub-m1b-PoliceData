@@ -30,12 +30,14 @@ export class PoliceForcesService {
   
   getForceDetail(index: number){
     this.polApiCall.fetchForceDetail(this.forces[index].id)
-    .subscribe((force: Force) => {
+    .subscribe((force) => {
+      console.log(force);
       this.forces[index].description = force.description;
-      this.forces[index].tel = force.tel;
+      this.forces[index].telephone = force.telephone;
       this.forces[index].url = force.url;
-      this.forces[index].engagement = force.engagement;
+      this.forces[index].engagement_methods = force.engagement_methods;
     });
+    console.log(this.forces[index]);
     return this.forces[index];
     
   }
