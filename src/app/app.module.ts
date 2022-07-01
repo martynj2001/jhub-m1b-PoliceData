@@ -13,6 +13,9 @@ import { ForceListItemComponent } from './forces/force-list/force-list-item/forc
 import { HttpClientModule } from '@angular/common/http';
 import { PoliceForcesService } from './forces/police-forces.service';
 import { RemoveTagsPipe } from './shared/remove-tags.pipe';
+import { PoliceInfoStartComponent } from './police-info/police-info-start/police-info-start.component';
+import { CrimeDataComponent } from './police-info/crime-data/crime-data.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,12 +27,15 @@ import { RemoveTagsPipe } from './shared/remove-tags.pipe';
     PoliceInfoComponent,
     ForceStartComponent,
     ForceListItemComponent,
-    RemoveTagsPipe
+    RemoveTagsPipe,
+    PoliceInfoStartComponent,
+    CrimeDataComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

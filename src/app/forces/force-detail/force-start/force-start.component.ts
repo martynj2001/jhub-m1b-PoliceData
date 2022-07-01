@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-force-start',
@@ -11,5 +12,7 @@ export class ForceStartComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  
 
 }

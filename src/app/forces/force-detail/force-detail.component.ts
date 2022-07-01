@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Force } from '../force.model';
 import { PoliceForcesService } from '../police-forces.service';
@@ -20,7 +20,8 @@ export class ForceDetailComponent implements OnInit, OnDestroy {
 
 
   constructor(private route: ActivatedRoute, 
-              private polForService: PoliceForcesService) { }
+              private polForService: PoliceForcesService,
+              private router: Router) { }
 
   ngOnInit(): void {
     
@@ -28,23 +29,15 @@ export class ForceDetailComponent implements OnInit, OnDestroy {
       .subscribe(
         (params: Params) => {
           this.index = +params['id'];
-          console.log(this.index);
           this.force = this.polForService.getForceDetail(this.index);
-          this.getSocials(this.force.engagement_methods);
+          //console.log(this.route);
         }
       );
   }
 
-  getSocials(engagement_methods){
-    for (let engagement of engagement_methods){
-      this.social_media.push(new Socials(
-        engagement.url,
-        engagement.type,
-        engagement.description,
-        engagement.title
-      ))
-      console.log(engagement);
-    }
+  onPoliceData(){
+    //console.log(`Index passed to police-info: ${this.index}` )
+    this.router.navigate(['/police-info', this.index], {relativeTo: this.route});
   }
 
   ngOnDestroy(): void {
