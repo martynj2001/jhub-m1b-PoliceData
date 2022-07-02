@@ -4,6 +4,7 @@ import { ForceDetailComponent } from './forces/force-detail/force-detail.compone
 import { ForceStartComponent } from './forces/force-detail/force-start/force-start.component';
 import { ForcesComponent } from './forces/forces.component';
 import { CrimeDataComponent } from './police-info/crime-data/crime-data.component';
+import { CrimeItemComponent } from './police-info/crime-data/crime-item/crime-item.component';
 import { PoliceInfoStartComponent } from './police-info/police-info-start/police-info-start.component';
 import { PoliceInfoComponent } from './police-info/police-info.component';
 
@@ -15,7 +16,10 @@ const routes: Routes = [
   ]},
   {path: 'police-info', component: PoliceInfoComponent, children: [
       {path: '', component: PoliceInfoStartComponent },
-      {path: ':id', component: CrimeDataComponent }
+      {path: ':id', component: CrimeDataComponent, children: [
+        {path: 'crime-data', component: CrimeItemComponent}
+      ] },
+      
   ]}
 ];
 

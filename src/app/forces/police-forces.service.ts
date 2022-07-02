@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, Subject, Subscription } from 'rxjs';
 import { PoliceApiCall } from '../shared/police-api-call.service';
 import { Force } from './force.model';
@@ -10,8 +11,11 @@ export class PoliceForcesService {
 
   policeForcesUpdated = new Subject<Force[]>();
   private forces: Force[] = [];
+  private blankForce = new Force('','','','', [],'');
 
-  constructor(private polApiCall: PoliceApiCall) {}
+  constructor(private polApiCall: PoliceApiCall,
+              private router: Router,
+              private route: ActivatedRoute) {}
 
   setForces(forces: Force[]){
     this.forces = forces;
@@ -21,6 +25,15 @@ export class PoliceForcesService {
 
   getForces(){
     return this.forces.slice();
+  }
+  getForce(index: number){
+    if (this.forces.length > 0){
+      return this.forces[index];
+    } else {
+      this.router.navigate([''], {relativeTo: this.route});
+      return this.blankForce;
+    }
+      
   }
   
   setforcesDetail(index: number){

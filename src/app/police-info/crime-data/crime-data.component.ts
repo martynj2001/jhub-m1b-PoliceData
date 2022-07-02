@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Force } from 'src/app/forces/force.model';
 import { PoliceForcesService } from 'src/app/forces/police-forces.service';
+import { PoliceApiCall } from 'src/app/shared/police-api-call.service';
 import { CrimeCatagory, CrimeData } from '../crime-data.model';
 import { PoliceInfoService } from '../police-info.service';
 
@@ -11,36 +12,72 @@ import { PoliceInfoService } from '../police-info.service';
   templateUrl: './crime-data.component.html',
   styleUrls: ['./crime-data.component.css']
 })
-export class CrimeDataComponent implements OnInit {
+export class CrimeDataComponent implements OnInit, OnDestroy {
 
   force: Force;
-  crimedata: CrimeData [];
-  index: number;
-  subscription: Subscription;
-  citys: string [];
-  citySelected = null;
+  crimedata: CrimeData[];
   crimeCatagories: CrimeCatagory[];
+  citys: string [];
+
+  crimeDataSub: Subscription;
+  
+  citySelected = null;
+  isLoading = null;
+  showCrimes = null;
+  selectedCatagory = 'all-crime';
+  totalCrimes: number;
 
   constructor(private route: ActivatedRoute,
               private polForService: PoliceForcesService,
-              private polInfoService: PoliceInfoService) { }
+              private polInfoService: PoliceInfoService, 
+              private apiCallService: PoliceApiCall) { }
 
   ngOnInit(): void {
-
+    this.isLoading = true;
+    this.showCrimes = false;
+    this.apiCallService.fetchCrimeCatagories().subscribe(
+      (crimeCat) => {
+        this.crimeCatagories = crimeCat;
+      });
     this.route.paramMap.subscribe(
       (params) => {
-        this.index = +params.get('id');
-        this.force = this.polForService.getForceDetail(this.index);
+        let index = +params.get('id');
+        this.force = this.polForService.getForce(index);
         this.citys = this.polInfoService.getCitys(this.force.id);
-      }
-    )
+        this.isLoading = false;
+      });
   }
 
   onCitySelected(city: string){
+    this.isLoading = true;
     this.citySelected = city;
-    this.crimedata = this.polInfoService.fetchCityCrimeData(this.force.id, city);
-    this.crimeCatagories = this.polInfoService.fetchCrimeCatagories();
-    console.log(this.crimeCatagories);
+    const city_area = this.polInfoService.getCityLocationData(this.force.id, city);
+    this.crimeDataSub = this.apiCallService.fetchCrimeInformation(city_area, '2022-1', this.selectedCatagory).subscribe(
+      (crimeData: CrimeData[]) => {
+        this.crimedata = crimeData;
+        this.polInfoService.setCrimeData(this.crimedata);
+        this.totalCrimes = this.polInfoService.getTotalCrimes();
+        this.isLoading = false;
+        this.showCrimes = true;
+      });
+  }
+
+  onCatagoryChanged(){
+    console.log("Catagory Changed");
+    this.isLoading = true;
+    const city_area = this.polInfoService.getCityLocationData(this.force.id, this.citySelected);
+    this.crimeDataSub = this.apiCallService.fetchCrimeInformation(city_area, '2022-1', this.selectedCatagory).subscribe(
+      (crimeData: CrimeData[]) => {
+        this.crimedata = crimeData;
+        this.polInfoService.setCrimeData(this.crimedata);
+        this.totalCrimes = this.polInfoService.getTotalCrimes();
+        this.isLoading = false;
+        this.showCrimes = true;
+      });
+  }
+
+  ngOnDestroy(): void {
+    //this.crimeDataSub.unsubscribe();
   }
 
 }

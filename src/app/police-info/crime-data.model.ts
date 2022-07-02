@@ -10,7 +10,7 @@ export class CrimeData {
     public id: number;
     public locaton_type: string;
     public location_subtype: string;
-    public outcome_status: string;
+    public outcome_status: CrimeOutcome;
 
 
     constructor(category: string, 
@@ -20,7 +20,7 @@ export class CrimeData {
                 id: number,
                 locaton_type: string,
                 location_subtype: string,
-                outcome_status: string){
+                outcome_status: CrimeOutcome){
         
         this.category = category;
         this.persistent_id = persistent_id;
@@ -37,4 +37,8 @@ export class CrimeData {
 
 export class CrimeCatagory {
     constructor(public url: string, public name: string){}
+}
+
+export class CrimeOutcome {
+    constructor(public category:string, public date: string){}
 }

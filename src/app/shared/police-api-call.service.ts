@@ -60,7 +60,7 @@ export class PoliceApiCall {
     )
   }
 
-  fetchCrimeInformation(crimeCat: string, area: string, date: string){
+  fetchCrimeInformation(area: string, date: string, crimeCat: string = 'all-crime'){
 
     const apiUrl = this.urlCrimes + crimeCat;
     let crimeParams = new HttpParams();
@@ -72,7 +72,7 @@ export class PoliceApiCall {
     });
   }
 
-  fetchCrimeCatagories(date: string){
+  fetchCrimeCatagories(date: string = '2022-1'){
     let crimesParams = new HttpParams();
     crimesParams = crimesParams.append('date', date);
     return this.http.get<CrimeCatagory[]>(this.urlCatagories, {

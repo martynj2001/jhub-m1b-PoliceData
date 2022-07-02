@@ -1,0 +1,17 @@
+<div class="card bg-light">     
+    <div class="card-body">
+        <div class="row">
+           <h5 class="text-center">Total Crimes: {{totalCrimes}}</h5>
+        </div>
+        <div class="row"> 
+            <div class="list-group-item"
+                *ngFor="let crime of crimeData">
+                <p><span class="fw-bold">Location/Street: </span>{{crime.location.street.name}}  </p>
+                <div class="d-flex flex-row justify-content-between">
+                    <p><span class="fw-bold">Outcome/Status: </span>{{crime.outcome_status | handleNull}}  </p>
+                    <p><span class="fw-bold">Date: </span>{{crime.month}}  </p> 
+                </div>    
+            </div>
+        </div>     
+    </div>
+</div>

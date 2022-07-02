@@ -16,6 +16,8 @@ import { RemoveTagsPipe } from './shared/remove-tags.pipe';
 import { PoliceInfoStartComponent } from './police-info/police-info-start/police-info-start.component';
 import { CrimeDataComponent } from './police-info/crime-data/crime-data.component';
 import { FormsModule } from '@angular/forms';
+import { CrimeItemComponent } from './police-info/crime-data/crime-item/crime-item.component';
+import { HandleNullPipe } from './police-info/crime-data/crime-item/handle-null.pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { FormsModule } from '@angular/forms';
     ForceListItemComponent,
     RemoveTagsPipe,
     PoliceInfoStartComponent,
-    CrimeDataComponent
+    CrimeDataComponent,
+    CrimeItemComponent,
+    HandleNullPipe
   ],
   imports: [
     BrowserModule,

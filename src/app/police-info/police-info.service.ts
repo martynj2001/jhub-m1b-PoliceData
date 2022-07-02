@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { PoliceApiCall } from '../shared/police-api-call.service';
 import { CrimeCatagory, CrimeData } from './crime-data.model';
 
@@ -10,8 +11,11 @@ export class PoliceInfoService {
   //In production version this will need to be stored on external  
   //storage(perhaps Goofle Forebase?)
 
-  private crimeData: CrimeData [];
-  private crimeCatagories: CrimeCatagory[];
+  private crimeData: CrimeData[];
+  private filteredCrimeData: CrimeData[];
+
+  crimeDataUpdated = new Subject<CrimeData[]>();
+  crimeCatagoryUpdated = new Subject<{catagory: string, total: number, crimes: CrimeData[]}>();
 
   forceLocations = [
     {
@@ -62,7 +66,12 @@ export class PoliceInfoService {
 
   constructor(private policeApiCall: PoliceApiCall) { }
 
-  private getCityLocationData(id: string, city: string){
+  setCrimeData(crimeData: CrimeData[]){
+    this.crimeData = crimeData;
+    this.printCrimeData();
+  }
+
+  getCityLocationData(id: string, city: string){
   
     let area = '';
     for (let force of this.forceLocations){
@@ -80,7 +89,6 @@ export class PoliceInfoService {
         }
       }
     }
-    console.log(area);
     return area;
   }
 
@@ -96,27 +104,25 @@ export class PoliceInfoService {
     return citys;
   } 
 
-  fetchCityCrimeData(id: string, city: string, crimeCat: string = 'all-crime', date: string = '2022-1'){
+  getCrimesByCatagory(catagory: string){
 
-    let location: string = this.getCityLocationData(id, city);
-    this.policeApiCall.fetchCrimeInformation(crimeCat, location, date)
-    .subscribe(
-      (crimesData: CrimeData []) => {
-         
-        this.crimeData = crimesData;
-        console.log(this.crimeData);
+    if (this.crimeData.length >0){
+      for (let crime of this.crimeData){
+        if (crime.category === catagory){
+          this.filteredCrimeData.push(crime);
+        }
       }
-    );
-    return this.crimeData;
+    }
   }
 
-  fetchCrimeCatagories( date: string = '2022-1'){
-    this.policeApiCall.fetchCrimeCatagories(date).subscribe(
-      (catagories: CrimeCatagory[]) => {
-        this.crimeCatagories = catagories;
-      }
-    );
-    return this.crimeCatagories;
+  getTotalCrimes(){
+    return this.crimeData.length;
+  }
+  
+  printCrimeData(){ //For Development only
+    console.log(this.crimeData);
+    if (this.filteredCrimeData)
+      console.log(this.filteredCrimeData);
   }
 
 }

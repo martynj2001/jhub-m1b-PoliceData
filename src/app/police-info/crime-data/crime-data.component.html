@@ -1,35 +1,69 @@
 <div class="row">
     <h2 class="text-center">{{force.name}}</h2>
+    <p class="text-center"> Street Crime data is available for the two major population centres in each UK Police Force</p>
 </div>
 <div class="row">
+    <div class="col-md-4"></div>
     <div class="col-md-4">
-        <div class="row"
-             *ngFor="let city of citys">
+        <div class="row" *ngFor="let city of citys">
             <button class="btn btn-primary" (click)="onCitySelected(city)">{{city}}</button>
             <hr>
         </div>
     </div>
-    <div class="col-md-8">
-      <div class="card bg-light">     
-        <div class="card-body" *ngIf="citySelected">
-            <div class="card-title fs-5 text-center">Recorded Street Level Crimes in {{citySelected}}</div>
-            <label for="catagory">Street Crime Catagories: </label>
-            <select name="catagory" 
-                    id="catagory" 
-                    class="form-control">
-                    <option *ngFor="let cat of crimeCatagories"
-                            [value]="cat.url">{{cat.name}}</option></select>
-            <hr>
-            <div class="row"> 
-                <router-outlet></router-outlet>   
-            </div>       
-        </div>
-        <div class="card-body" *ngIf="!citySelected">
-            <div class="card-title fs-5 text-center">Please Select a city</div>
-            <p> Street Crime data is available for the two major population centres in each UK Police Force</p>      
-        </div>
-        
-    </div>
-  </div>
+    <div class="col-md-4"></div>
 </div>
+<div class="row">
+    
+</div>
+<div class="row text-center fs-3" *ngIf="citySelected"><h4>Street Level Crimes in {{citySelected}}</h4> </div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <form class="form-group" 
+              (ngSubmit)="onCatagoryChanged()"
+              *ngIf="!isLoading && citySelected">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-6">
+                        <select 
+                            name="catagory" 
+                            id="catagory" 
+                            class="form-group-item form-control form-select"
+                            [(ngModel)]="selectedCatagory">
+                            <option *ngFor="let cat of crimeCatagories"
+                                [value]="cat.url">{{cat.name}}</option>
+                        </select> 
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary text-center" type="submit">Filter</button>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+        </form>
+    </div>
+    <div class="col-md-1"></div> 
+</div>
+<hr>
+<div class="row">
+    <div class="spinner-border text-primary text-center"
+         role="status"
+         *ngIf="isLoading">
+         <span class="visually-hidden text-center"></span>
+    </div>
+    <router-outlet></router-outlet>
+    <app-crime-item 
+        *ngIf="showCrimes"
+        [crimeData]="crimedata"
+        [crimeCatagory]="selectedCatagory"
+        [totalCrimes]="totalCrimes"></app-crime-item>
+</div>
+
+
+
+
+
+
+
+    
+
 
