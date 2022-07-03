@@ -1,5 +1,33 @@
 # JhubM1bPoliceData
 
+# Data.Police.UK Viewer
+
+This project is my submission forthe JHub Coding Scheme Moideule 1b.
+
+The source code can be accessed through its public GitHub repo: https://github.com/martynj2001/jhub-m1b-PoliceData.git
+
+# To view the application locally (Localhost):
+
+After cloneing the code using the command line: `git clone https://github.com/martynj2001/jhub-m1b-PoliceData.git`
+
+You will first need to install Node.js which includes the Node Package Manager from `https://nodejs.org/en/`
+
+To run the project on a local server you will first need to instal the Angular CLI: `npm install -g @angular/cli`
+
+And install the project dependencise from the project folder: `npm install`
+
+To start the local server run from th eproject folder: `ng serve`
+
+If you do not already have a server running the app will be available at `localhost:4200`
+
+# To view the app on a remote server:
+
+
+
+
+
+# Angular Stuff!
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.0.
 
 ## Development server
