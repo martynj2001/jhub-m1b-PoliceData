@@ -7,18 +7,23 @@
                 <div class="card">
                     <div class="card-body">
                         <app-force-list></app-force-list>
-                        <!-- <p *ngIf="isLoading">Loading ....... </p> -->
                     </div>
                 </div>
             </div>
             <div class="col-md-7">
                 <div class="card">
                     <div class="card-body">
-                        <router-outlet *ngIf="!isLoading"></router-outlet>
+                        <router-outlet *ngIf="!isLoading && !errorCode"></router-outlet>
                         <div class="spinner-border text-primary"
                              role="status"
                              *ngIf="isLoading">
                             <span class="visually-hidden text-center"></span>
+                        </div>
+                        <div class="alert alert-danger"
+                             *ngIf="errorCode">
+                            <h4>An Error Occured when accessing the Police.Data.UK API</h4>
+                            <p>{{errorCode}}</p>
+                            <p>Try refreshing the page to clear.</p>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { PoliceInfoComponent } from 'src/app/police-info/police-info.component';
+import { PoliceInfoService } from 'src/app/police-info/police-info.service';
 import { Force } from '../force.model';
 import { PoliceForcesService } from '../police-forces.service';
 import { Socials } from '../socials.model';
@@ -15,12 +17,12 @@ export class ForceDetailComponent implements OnInit, OnDestroy {
   force: Force;
   index: number = 0;
   social_media: Socials[]
-
+  data: boolean;
   subscription: Subscription;
-
 
   constructor(private route: ActivatedRoute, 
               private polForService: PoliceForcesService,
+              private polInfoService: PoliceInfoService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -30,7 +32,7 @@ export class ForceDetailComponent implements OnInit, OnDestroy {
         (params: Params) => {
           this.index = +params['id'];
           this.force = this.polForService.getForceDetail(this.index);
-          //console.log(this.route);
+          this.data = this.polInfoService.isLocationData(this.force.name);
         }
       );
   }

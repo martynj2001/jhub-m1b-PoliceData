@@ -20,6 +20,7 @@ export class PoliceInfoService {
   forceLocations = [
     {
       id: "avon-and-somerset",
+      name: "Avon and Somerset Constabulary",
       city_1: {
         name: "Bristol",
         location: [
@@ -41,6 +42,7 @@ export class PoliceInfoService {
     },
     {
       id: "bedfordshire",
+      name: "Bedfordshire Police",
       city_1: {
         name: "Bedford",
         location: [
@@ -61,6 +63,29 @@ export class PoliceInfoService {
           "51.8951271,-0.5651876"
         ] 
       }
+    },
+    {
+      id: "devon-and-cornwall",
+      name: "Devon & Cornwall Police",
+      city_1: {
+        name: "Plymouth",
+        location: [
+          "50.3964308,-4.207446",
+          "50.3537413,-4.1463345",
+          "50.3938045,-4.0714902",
+          "50.435809,-4.1497678"
+        ]
+      },
+      city_2: {
+        name: "Exeter",
+        location: [
+          "50.749657,-3.5455197",   
+          "50.7070618,-3.6045712",    
+          "50.6844516,-3.5345334",    
+          "50.7279296,-3.4590024",    
+          "50.749657,-3.5455197"   
+        ] 
+      }
     }
   ]
 
@@ -68,7 +93,6 @@ export class PoliceInfoService {
 
   setCrimeData(crimeData: CrimeData[]){
     this.crimeData = crimeData;
-    this.printCrimeData();
   }
 
   getCityLocationData(id: string, city: string){
@@ -117,6 +141,15 @@ export class PoliceInfoService {
 
   getTotalCrimes(){
     return this.crimeData.length;
+  }
+
+  isLocationData(name: string){
+    for (let force of this.forceLocations){
+      if (name === force.name){
+        return true;
+      }
+    }
+    return false;
   }
   
   printCrimeData(){ //For Development only

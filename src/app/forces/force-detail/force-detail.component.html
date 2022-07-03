@@ -13,7 +13,9 @@
 <div class="row">
     <div class="col-md-2 text-center"></div>
     <div class="col-md-8 col-xs-12 text-center">
-        <button class="btn btn-primary" (click)="onPoliceData()">Access Police Force Crime Data</button>
+        <button class="btn btn-primary" 
+                (click)="onPoliceData()"
+                [disabled]="!data">Access Police Force Crime Data</button>
     </div>
     <div class="col-md-2 text-center"></div>
     

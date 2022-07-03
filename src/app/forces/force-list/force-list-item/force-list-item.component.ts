@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PoliceInfoService } from 'src/app/police-info/police-info.service';
 
 @Component({
   selector: 'app-force-list-item',
@@ -8,11 +9,15 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ForceListItemComponent implements OnInit {
 
   @Input() force: string;
-  @Input() index:number;
+  @Input() index: number;
+  data: boolean;
 
-  constructor() { }
+  constructor(private polInfoService: PoliceInfoService) { }
 
   ngOnInit(): void {
+
+    this.data = this.polInfoService.isLocationData(this.force);
+
   }
 
 }

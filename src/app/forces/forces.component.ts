@@ -12,6 +12,7 @@ import { PoliceForcesService } from './police-forces.service';
 export class ForcesComponent implements OnInit, OnDestroy {
 
   isLoading = null;
+  errorCode = null;
 
   constructor(private polApiService: PoliceApiCall, private polForService: PoliceForcesService) { }
 
@@ -22,6 +23,8 @@ export class ForcesComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.polForService.setForces(forces);
         //console.log("Subscription triggered");
+      }, error => {
+        this.errorCode = error;
       });
   }
 

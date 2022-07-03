@@ -23,7 +23,6 @@ export class ForceListComponent implements OnInit, OnDestroy {
     .subscribe(
       (forces: Force[]) => {
         this.forces = forces;
-        //console.log(forces);
       }
     )
   }

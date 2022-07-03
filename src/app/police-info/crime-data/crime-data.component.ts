@@ -24,6 +24,7 @@ export class CrimeDataComponent implements OnInit, OnDestroy {
   citySelected = null;
   isLoading = null;
   showCrimes = null;
+  errorCode = null;
   selectedCatagory = 'all-crime';
   totalCrimes: number;
 
@@ -38,6 +39,8 @@ export class CrimeDataComponent implements OnInit, OnDestroy {
     this.apiCallService.fetchCrimeCatagories().subscribe(
       (crimeCat) => {
         this.crimeCatagories = crimeCat;
+      }, error => {
+        this.errorCode = error;
       });
     this.route.paramMap.subscribe(
       (params) => {
@@ -59,6 +62,8 @@ export class CrimeDataComponent implements OnInit, OnDestroy {
         this.totalCrimes = this.polInfoService.getTotalCrimes();
         this.isLoading = false;
         this.showCrimes = true;
+      }, error => {
+        this.errorCode = error;
       });
   }
 
@@ -73,6 +78,8 @@ export class CrimeDataComponent implements OnInit, OnDestroy {
         this.totalCrimes = this.polInfoService.getTotalCrimes();
         this.isLoading = false;
         this.showCrimes = true;
+      }, error => {
+        this.errorCode = error;
       });
   }
 
