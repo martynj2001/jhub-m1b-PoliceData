@@ -22,8 +22,7 @@ If you do not already have a server running the app will be available at `localh
 
 # To view the app on a remote server:
 
-
-
+The app is hosted on a firebase server: `https://jhub-module-1b-jones.web.app`
 
 
 # Angular Stuff!
